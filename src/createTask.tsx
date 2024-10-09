@@ -21,10 +21,6 @@ function CreateTask({
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const { tasks, selectedTask } = useAppSelector((state) => state.board);
 
-  useEffect(() => {
-    console.log("selectedTask: ", selectedTask);
-  }, [selectedTask]);
-
   type FieldType = {
     title?: string;
     description?: string;
