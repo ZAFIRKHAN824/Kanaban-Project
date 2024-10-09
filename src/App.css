@@ -1,0 +1,47 @@
+ul {
+    list-style: none;
+    padding-left: 5px;
+}
+.box {
+    width: 200px;
+    height: 50px;
+    margin-bottom: 5px;
+}
+#header{
+    text-align: center;
+    font-size: 40px;
+    margin-top: 10px;
+    font-weight: bolder;
+    font-family:  sans-serif;
+}
+#createTask{
+position: absolute;
+top: 200px;
+left: 250px;
+width: 700px;
+padding: 30px;
+z-index: 111;
+
+}
+#status{
+    position: relative;
+    top: 30px;
+    display: flex;
+    justify-content: space-around;
+
+}
+.column{
+font-size: 25px;
+}
+
+.createTaskButt{
+position: relative;
+top: 10px;
+left:20px;
+border: solid 2px black;
+}
+.createTaskButt:hover{
+    scale: 1.05;
+}
+
+
