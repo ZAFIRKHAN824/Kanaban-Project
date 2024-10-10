@@ -1,11 +1,10 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "antd";
 
 import ColumnCard from "./columnCard";
 import TaskDetailsModal from "./modals/taskDetailsModal";
 import CreateTaskModal from "./modals/CreateTaskModal";
-import { useAppSelector } from "./store";
 
 function App() {
   // modal states

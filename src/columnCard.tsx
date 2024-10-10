@@ -95,7 +95,6 @@ function ColumnCard({
                     onDragStart={(e) => handleDragStart(e, card.id.toString())}
                     style={{
                       cursor: "pointer",
-                      border: "1px solid red",
                     }}
                   >
                     <TaskCard

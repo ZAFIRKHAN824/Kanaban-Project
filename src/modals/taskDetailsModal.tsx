@@ -2,8 +2,8 @@ import React from "react";
 import { Modal, Tag } from "antd";
 import "../taskCard.css";
 import { EditOutlined } from "@ant-design/icons";
-import { Task } from "../counterSlice";
-import { useAppSelector } from "../store";
+import { setSelectedTask, Task } from "../counterSlice";
+import { useAppDispatch, useAppSelector } from "../store";
 import { color } from "../utils";
 
 const TaskDetailsModal = ({
@@ -18,6 +18,7 @@ const TaskDetailsModal = ({
   const taskDetails = useAppSelector(
     (state: any) => state?.board?.selectedTask
   ) as Task;
+  const dispatch = useAppDispatch();
   if (!taskDetails) return;
   const { title, creationDate, description, dueDate, id, status, tags } =
     taskDetails;
@@ -29,9 +30,16 @@ const TaskDetailsModal = ({
     <Modal
       title="Task Details"
       open={isModalOpen}
-      onOk={() => setModalOpen(false)}
+      onOk={() => {
+        setModalOpen(false);
+        dispatch(setSelectedTask(undefined));
+      }}
       style={{
         color: "blue",
+      }}
+      onCancel={() => {
+        setModalOpen(false);
+        dispatch(setSelectedTask(undefined));
       }}
     >
       <p>

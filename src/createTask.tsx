@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Form, Input, DatePicker, Select } from "antd";
 import { useAppSelector, useAppDispatch } from "./store";
-import { addTask, updateTask } from "./counterSlice";
+import { addTask, setSelectedTask, updateTask } from "./counterSlice";
 import dayjs from "dayjs";
 import localeData from "dayjs/plugin/localeData";
 import weekday from "dayjs/plugin/weekday";
@@ -52,6 +52,7 @@ function CreateTask({
     }
     setCreateTaskModal(false);
     form.resetFields();
+    dispatch(setSelectedTask(undefined));
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -80,7 +81,7 @@ function CreateTask({
   useEffect(() => {
     if (selectedTask) {
       form.setFieldsValue(transformDataForForm(selectedTask));
-    }
+    } else form.resetFields();
   }, [selectedTask]);
 
   return (
