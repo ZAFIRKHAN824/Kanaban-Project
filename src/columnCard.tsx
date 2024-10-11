@@ -5,7 +5,9 @@ import { addTask, setSelectedTask, Task } from "./counterSlice";
 
 function ColumnCard({
   setTaskDetailsModalOpen,
+  searchedTask,
 }: {
+  searchedTask: string;
   setTaskDetailsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const tasks = useAppSelector((state: any) => state?.board?.tasks) as Task[];
@@ -97,10 +99,22 @@ function ColumnCard({
                       cursor: "pointer",
                     }}
                   >
-                    <TaskCard
-                      task={card}
-                      onClickTaskCard={() => onClickTaskCard(card)}
-                    />
+                    {card.title
+                      .toLocaleLowerCase()
+                      .includes(searchedTask.toLocaleLowerCase()) ||
+                    card.description
+                      .toLocaleLowerCase()
+                      .includes(searchedTask.toLocaleLowerCase()) ||
+                    card.tags?.some(
+                      (tag) =>
+                        tag.toLocaleLowerCase() ===
+                        searchedTask.toLocaleLowerCase()
+                    ) ? (
+                      <TaskCard
+                        task={card}
+                        onClickTaskCard={() => onClickTaskCard(card)}
+                      />
+                    ) : null}
                   </div>
                 ))}
             </div>

@@ -27,7 +27,7 @@ export const counterSlice = createSlice({
   reducers: {
     addTask: (state, action) => {
       state.tasks = state.tasks.filter(task => task.id !== action.payload.id);
-      state.tasks = [...state.tasks, action.payload];
+      state.tasks.push(action.payload);
     },
     updateTask:(state, action) => {
       const taskIndex = state.tasks.findIndex((task) => task.id === action.payload.id);
@@ -38,11 +38,17 @@ export const counterSlice = createSlice({
     },
     setSelectedTask: (state, action) => {
       state.selectedTask = action.payload
-    }
+    },
+    storedTaskLocally: (state, action) => {
+      state.tasks = action.payload
+    },
+    // deleteTask: (state, action) => {
+    //   state.tasks = state.tasks.filter(task => task.id !== action.payload.id);
+    // }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addTask,updateTask, setSelectedTask } = counterSlice.actions;
+export const { addTask,updateTask, setSelectedTask,storedTaskLocally } = counterSlice.actions;
 
 export default counterSlice.reducer;

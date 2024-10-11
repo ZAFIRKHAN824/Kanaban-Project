@@ -37,11 +37,24 @@ font-size: 25px;
 .createTaskButt{
 position: relative;
 top: 10px;
-left:20px;
+left: 40px;
 border: solid 2px black;
 }
 .createTaskButt:hover{
     scale: 1.05;
+}
+#serachTask{
+    position: absolute;
+    top: 25px;
+    right: 30px;
+}
+input{
+    
+    border-radius: 20px;
+    text-align: center;
+    height: 40px;
+    width: 250px;
+    font-size: 18px;
 }
 
 

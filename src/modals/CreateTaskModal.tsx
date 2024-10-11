@@ -4,7 +4,6 @@ import "../taskCard.css";
 import CreateTask from "../createTask";
 import { useAppDispatch } from "../store";
 import { setSelectedTask } from "../counterSlice";
-import { SmallDashOutlined } from "@ant-design/icons";
 
 const CreateTaskModal = ({
   isModalOpen,
@@ -14,6 +13,7 @@ const CreateTaskModal = ({
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const dispatch = useAppDispatch();
+
   return (
     <Modal
       title="Basic Modal"
