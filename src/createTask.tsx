@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Form, Input, DatePicker, Select } from "antd";
 import { useAppSelector, useAppDispatch } from "./store";
-import {
-  addTask,
-  setSelectedTask,
-  storedTaskLocally,
-  updateTask,
-} from "./counterSlice";
+import { addTask, setSelectedTask, updateTask } from "./counterSlice";
 import dayjs from "dayjs";
 import localeData from "dayjs/plugin/localeData";
 import weekday from "dayjs/plugin/weekday";

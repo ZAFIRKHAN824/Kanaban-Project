@@ -45,11 +45,10 @@ border: solid 2px black;
 }
 #serachTask{
     position: absolute;
-    top: 25px;
-    right: 30px;
+    top: 70px;
+    right: 18px;
 }
-input{
-    
+#InputSearchTask{
     border-radius: 20px;
     text-align: center;
     height: 40px;

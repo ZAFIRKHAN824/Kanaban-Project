@@ -1,16 +1,19 @@
 import React from "react";
 import { Modal, Tag } from "antd";
 import "../taskCard.css";
-import { EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { setSelectedTask, Task } from "../counterSlice";
 import { useAppDispatch, useAppSelector } from "../store";
 import { color } from "../utils";
+import Ribbon from "antd/es/badge/Ribbon";
 
 const TaskDetailsModal = ({
   isModalOpen,
   setModalOpen,
   setCreateTaskModal,
+  onClickDelete,
 }: {
+  onClickDelete: () => void;
   isModalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setCreateTaskModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,6 +46,10 @@ const TaskDetailsModal = ({
       }}
     >
       <p>
+        <span style={{ float: "right" }}>
+          <DeleteOutlined onClick={onClickDelete} />
+        </span>
+        <br />
         <strong>Title:</strong> {title}
         <span style={{ float: "right" }}>
           <EditOutlined

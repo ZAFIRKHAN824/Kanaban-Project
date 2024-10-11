@@ -17,7 +17,9 @@ interface InitialStateTypes {
  
 }
 const initialState: InitialStateTypes = {
-  tasks: [],
+  tasks: JSON.parse(
+    localStorage.getItem("localStoredTask") || "[]"
+  ),
   selectedTask: undefined,
 };
 
@@ -39,16 +41,14 @@ export const counterSlice = createSlice({
     setSelectedTask: (state, action) => {
       state.selectedTask = action.payload
     },
-    storedTaskLocally: (state, action) => {
-      state.tasks = action.payload
-    },
-    // deleteTask: (state, action) => {
-    //   state.tasks = state.tasks.filter(task => task.id !== action.payload.id);
-    // }
+    
+    deleteTask: (state, action) => {
+      state.tasks = state.tasks.filter(task => task.id !== action.payload.id);
+    }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addTask,updateTask, setSelectedTask,storedTaskLocally } = counterSlice.actions;
+export const { addTask,updateTask, setSelectedTask,deleteTask } = counterSlice.actions;
 
 export default counterSlice.reducer;
