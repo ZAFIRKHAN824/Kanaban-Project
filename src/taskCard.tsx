@@ -1,7 +1,6 @@
 import { Tag } from "antd";
 import "./taskCard.css";
 import { Task } from "./counterSlice";
-import { color } from "./utils";
 
 function TaskCard({
   task,
@@ -38,7 +37,7 @@ function TaskCard({
           {" "}
           {tags?.map((value, index) => (
             <span key={index}>
-              <Tag color={`${color[index]}`}>{value}</Tag>
+              <Tag color={`${value.color}`}>{value.value}</Tag>
             </span>
           ))}{" "}
         </div>

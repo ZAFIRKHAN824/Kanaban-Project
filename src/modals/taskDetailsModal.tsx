@@ -4,8 +4,7 @@ import "../taskCard.css";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { setSelectedTask, Task } from "../counterSlice";
 import { useAppDispatch, useAppSelector } from "../store";
-import { color } from "../utils";
-import Ribbon from "antd/es/badge/Ribbon";
+import { colorList } from "../utils";
 
 const TaskDetailsModal = ({
   isModalOpen,
@@ -28,6 +27,7 @@ const TaskDetailsModal = ({
 
   const dueDateObj = new Date(dueDate);
   const currDate = new Date();
+  console.log("tagsnew", tags);
 
   return (
     <Modal
@@ -82,7 +82,7 @@ const TaskDetailsModal = ({
         <strong>Tags:</strong>{" "}
         {tags?.map((value, index) => (
           <span key={index}>
-            <Tag color={`${color[index]}`}>{value}</Tag>
+            <Tag color={`${value.color}`}>{value.value}</Tag>
           </span>
         ))}
       </p>

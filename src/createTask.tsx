@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import { Button, Form, Input, DatePicker, Select } from "antd";
 import { useAppSelector, useAppDispatch } from "./store";
-import { addTask, setSelectedTask, updateTask } from "./counterSlice";
+import {
+  addTask,
+  Option,
+  setOptions,
+  setSelectedTask,
+  updateTask,
+} from "./counterSlice";
 import dayjs from "dayjs";
 import localeData from "dayjs/plugin/localeData";
 import weekday from "dayjs/plugin/weekday";
 import "dayjs/locale/en";
 import "./createTask.css";
+import { colorList } from "./utils";
 
 function CreateTask({
   setCreateTaskModal,
@@ -19,14 +26,34 @@ function CreateTask({
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  const { tasks, selectedTask } = useAppSelector((state) => state.board);
+  const { tasks, selectedTask, options } = useAppSelector(
+    (state) => state.board
+  );
+  const [selectedOptionsInForm, setSelectedOptionsInForm] = useState<Option[]>(
+    []
+  );
 
   type FieldType = {
     title?: string;
     description?: string;
     dueDate?: any;
-    tags: string[];
+    tags: Option[];
   };
+  function handleChange(selectValues: string[]) {
+    const optionsWithValues = options?.map((option) => option.value) || [];
+    const selectedValuesWithColor =
+      options?.filter((option) => selectValues.includes(option.value)) || [];
+    const newArr =
+      selectValues
+        ?.filter((value) => !optionsWithValues.includes(value))
+        .map((value) => ({
+          label: value,
+          value: value,
+          color: colorList[Math.floor(Math.random() * colorList.length)],
+        })) || [];
+
+    setSelectedOptionsInForm([...selectedValuesWithColor, ...newArr]);
+  }
 
   const onFinish = (values: FieldType) => {
     //Updating Task in edit mode
@@ -38,6 +65,7 @@ function CreateTask({
           status: selectedTask.status,
           dueDate: values.dueDate.format("ddd MMM DD YYYY"),
           creationDate: new Date().toDateString(),
+          tags: selectedOptionsInForm,
         })
       );
     } else {
@@ -50,14 +78,14 @@ function CreateTask({
           dueDate: values.dueDate.format("ddd MMM DD YYYY"),
           id: tasks.length + 1,
           status: "to-do",
-          tags: values.tags,
+          tags: selectedOptionsInForm,
         })
       );
-      console.log("tasks", tasks);
     }
     setCreateTaskModal(false);
     form.resetFields();
     dispatch(setSelectedTask(undefined));
+    dispatch(setOptions(selectedOptionsInForm));
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -143,10 +171,8 @@ function CreateTask({
               mode="tags"
               style={{ width: "100%" }}
               placeholder="Select or add tags"
-              options={[
-                { value: "front-end", label: "Front end" },
-                { value: "back-end", label: "Back end" },
-              ]}
+              onChange={handleChange}
+              options={options}
             />
           </Form.Item>
 

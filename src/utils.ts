@@ -1,2 +1,2 @@
-export const color = ["yellow", "magenta", "geekblue", "cyan", "green"];
+export const colorList = ["yellow", "magenta", "geekblue", "cyan", "green"];
   

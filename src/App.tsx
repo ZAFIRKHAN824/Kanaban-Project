@@ -8,12 +8,13 @@ import CreateTaskModal from "./modals/CreateTaskModal";
 import { deleteTask, setSelectedTask, Task } from "./counterSlice";
 import { useAppDispatch, useAppSelector } from "./store";
 import { SearchOutlined } from "@ant-design/icons";
+import { colorList } from "./utils";
 
 function App() {
   const [createTaskModalOpen, setCreateTaskModalOpen] = useState(false);
   const [taskDetailsModalOpen, setTaskDetailsModalOpen] = useState(false);
   const [searchedTask, setSearchedTask] = useState("");
-  const tasks = useAppSelector((state: any) => state?.board?.tasks);
+  const { tasks, options } = useAppSelector((state: any) => state?.board);
   const taskDetails = useAppSelector(
     (state: any) => state?.board?.selectedTask
   );
@@ -23,6 +24,25 @@ function App() {
   useEffect(() => {
     localStorage.setItem("localStoredTask", JSON.stringify(tasks));
   }, [tasks]);
+
+  useEffect(() => {
+    const options = JSON.parse(
+      localStorage.getItem("localStoredOptions") || "[]"
+    );
+    if (options.length > 0) return;
+    localStorage.setItem(
+      "localStoredOptions",
+      JSON.stringify([
+        { value: "front-end", label: "Front end", color: colorList[0] },
+        { value: "back-end", label: "Back end", color: colorList[1] },
+      ])
+    );
+  }, []);
+
+  useEffect(() => {
+    if (options.length > 0)
+      localStorage.setItem("localStoredOptions", JSON.stringify(options));
+  }, [options]);
   // modal states
 
   const onClickDelete = (task: Task) => {

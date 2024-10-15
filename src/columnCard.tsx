@@ -104,12 +104,7 @@ function ColumnCard({
                       .includes(searchedTask.toLocaleLowerCase()) ||
                     card.description
                       .toLocaleLowerCase()
-                      .includes(searchedTask.toLocaleLowerCase()) ||
-                    card.tags?.some(
-                      (tag) =>
-                        tag.toLocaleLowerCase() ===
-                        searchedTask.toLocaleLowerCase()
-                    ) ? (
+                      .includes(searchedTask.toLocaleLowerCase()) ? (
                       <TaskCard
                         task={card}
                         onClickTaskCard={() => onClickTaskCard(card)}
