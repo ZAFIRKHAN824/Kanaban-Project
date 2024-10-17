@@ -55,5 +55,17 @@ border: solid 2px black;
     width: 250px;
     font-size: 18px;
 }
-
+#filter{
+    position: absolute;
+    width: 20%;
+    top: 75px;
+    right: 28%;
+  
+}
+#sorting{
+    position: absolute;
+    width: 20%;
+    top: 75px;
+    right: 53%;
+}
 

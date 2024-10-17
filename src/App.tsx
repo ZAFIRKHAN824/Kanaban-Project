@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { Button } from "antd";
+import { Button, Select } from "antd";
 
 import ColumnCard from "./columnCard";
 import TaskDetailsModal from "./modals/taskDetailsModal";
@@ -9,10 +9,22 @@ import { deleteTask, setSelectedTask, Task } from "./counterSlice";
 import { useAppDispatch, useAppSelector } from "./store";
 import { SearchOutlined } from "@ant-design/icons";
 import { colorList } from "./utils";
+import { DefaultOptionType } from "antd/es/select";
+import { BaseOptionType } from "antd/es/cascader";
 
 function App() {
   const [createTaskModalOpen, setCreateTaskModalOpen] = useState(false);
   const [taskDetailsModalOpen, setTaskDetailsModalOpen] = useState(false);
+  const [filteredTags, setFilteredTags] = useState<string[]>([]);
+  const [sortingOptions, setSortingOptions] = useState<
+    (DefaultOptionType | BaseOptionType)[]
+  >([
+    { value: "A-Z", label: "A-Z" },
+    { value: "Z-A", label: "Z-A" },
+    { value: "Most recent created Task", label: "Most recent created Task" },
+    { value: "Most recent created Task", label: "Most recent created Task" },
+  ]);
+
   const [searchedTask, setSearchedTask] = useState("");
   const { tasks, options } = useAppSelector((state: any) => state?.board);
   const taskDetails = useAppSelector(
@@ -50,7 +62,9 @@ function App() {
     dispatch(deleteTask(task));
     dispatch(setSelectedTask(undefined));
   };
-
+  const handleChange = (value: string[]) => {
+    setFilteredTags(value); // Combine the previous state with the new value
+  };
   return (
     <>
       <div id="header">Welcome To Kanban Board</div>
@@ -64,22 +78,52 @@ function App() {
         {" "}
         Create Task
       </Button>{" "}
-      <div id="serachTask">
-        <span style={{ marginRight: "20px" }}>
-          <input
-            id="InputSearchTask"
-            placeholder="Search by Title or Description"
-            onChange={(e) => setSearchedTask(e.target.value)}
-            type="text"
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div id="filter">
+          <Select
+            mode="tags"
+            style={{
+              width: "100%",
+              height: 35,
+              fontSize: 20,
+              textAlign: "center",
+            }}
+            placeholder="Filter By Tags"
+            onChange={handleChange}
+            options={options}
           />
-        </span>
-        <SearchOutlined />
+        </div>
+        <div id="sorting">
+          <Select
+            mode="multiple"
+            style={{
+              width: "100%",
+              height: 35,
+              fontSize: 20,
+              textAlign: "center",
+            }}
+            placeholder="Sorting"
+            options={sortingOptions}
+          />
+        </div>
+        <div id="serachTask">
+          <span style={{ marginRight: "20px" }}>
+            <input
+              id="InputSearchTask"
+              placeholder="Search by Title or Description"
+              onChange={(e) => setSearchedTask(e.target.value)}
+              type="text"
+            />
+          </span>
+          <SearchOutlined />
+        </div>
       </div>
       <div>
         {" "}
         <ColumnCard
           setTaskDetailsModalOpen={setTaskDetailsModalOpen}
           searchedTask={searchedTask}
+          filteredTags={filteredTags}
         />
       </div>
       <TaskDetailsModal

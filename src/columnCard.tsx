@@ -4,9 +4,11 @@ import { useAppSelector, useAppDispatch } from "./store";
 import { addTask, setSelectedTask, Task } from "./counterSlice";
 
 function ColumnCard({
+  filteredTags,
   setTaskDetailsModalOpen,
   searchedTask,
 }: {
+  filteredTags: string[];
   searchedTask: string;
   setTaskDetailsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -57,6 +59,11 @@ function ColumnCard({
     setTaskDetailsModalOpen(true);
     dispatch(setSelectedTask(task));
   };
+  const filterationByTags = () => {};
+
+  useEffect(() => {
+    console.log("filteredTags: ", filteredTags);
+  }, [filteredTags]);
 
   return (
     <>
@@ -99,12 +106,16 @@ function ColumnCard({
                       cursor: "pointer",
                     }}
                   >
-                    {card.title
+                    {(card.title
                       .toLocaleLowerCase()
                       .includes(searchedTask.toLocaleLowerCase()) ||
-                    card.description
-                      .toLocaleLowerCase()
-                      .includes(searchedTask.toLocaleLowerCase()) ? (
+                      card.description
+                        .toLocaleLowerCase()
+                        .includes(searchedTask.toLocaleLowerCase())) &&
+                    (filteredTags.length === 0 ||
+                      filteredTags?.every((tag) =>
+                        card.tags?.map((tag) => tag.value)?.includes(tag)
+                      )) ? (
                       <TaskCard
                         task={card}
                         onClickTaskCard={() => onClickTaskCard(card)}
