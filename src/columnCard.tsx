@@ -7,7 +7,9 @@ function ColumnCard({
   filteredTags,
   setTaskDetailsModalOpen,
   searchedTask,
+  selectedSortOption,
 }: {
+  selectedSortOption: string;
   filteredTags: string[];
   searchedTask: string;
   setTaskDetailsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +22,7 @@ function ColumnCard({
   const dispatch = useAppDispatch();
 
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
+  const [titleFirstLetter, setTitleFirstLetter] = useState<string[]>([]);
 
   const handleDragStart = (
     event: React.DragEvent<HTMLDivElement>,
@@ -59,11 +62,77 @@ function ColumnCard({
     setTaskDetailsModalOpen(true);
     dispatch(setSelectedTask(task));
   };
-  const filterationByTags = () => {};
 
   useEffect(() => {
     console.log("filteredTags: ", filteredTags);
   }, [filteredTags]);
+
+  function sortedTasks(status: string) {
+    const sortedTasks = tasks
+      .filter((task) => task.status === status)
+      .sort((a, b) => {
+        if (selectedSortOption === "A-Z") {
+          if (a.title > b.title) {
+            return 1;
+          }
+          if (b.title > a.title) {
+            return -1;
+          }
+          return 0;
+        } else if (selectedSortOption === "Z-A") {
+          if (a.title > b.title) {
+            return -1;
+          }
+          if (b.title > a.title) {
+            return 1;
+          }
+          return 0;
+        } else if (selectedSortOption === "Recent") {
+          const dateA = new Date(a.creationDate).getTime();
+          const dateB = new Date(b.creationDate).getTime();
+
+          if (dateA > dateB) {
+            return -1;
+          }
+          if (dateA < dateB) {
+            return 1;
+          }
+        } else if (selectedSortOption === "least") {
+          const dateA = new Date(a.creationDate).getTime();
+          const dateB = new Date(b.creationDate).getTime();
+
+          if (dateA > dateB) {
+            return 1;
+          }
+          if (dateA < dateB) {
+            return -1;
+          }
+        } else if (selectedSortOption === "nearest") {
+          const dateA = new Date(a.dueDate).getTime();
+          const dateB = new Date(b.dueDate).getTime();
+
+          if (dateA > dateB) {
+            return 1;
+          }
+          if (dateA < dateB) {
+            return -1;
+          }
+        } else if (selectedSortOption === "door") {
+          const dateA = new Date(a.dueDate).getTime();
+          const dateB = new Date(b.dueDate).getTime();
+
+          if (dateA > dateB) {
+            return -1;
+          }
+          if (dateA < dateB) {
+            return 1;
+          }
+        }
+        return 0;
+      });
+    console.log("sortedTasks: ", sortedTasks);
+    return sortedTasks;
+  }
 
   return (
     <>
@@ -95,9 +164,8 @@ function ColumnCard({
                 {status.toUpperCase()}
               </div>
 
-              {tasks
-                ?.filter((task) => task.status === status)
-                .map((card: Task) => (
+              {sortedTasks(status).map((card: Task) => {
+                return (
                   <div
                     key={card.id}
                     draggable
@@ -122,7 +190,8 @@ function ColumnCard({
                       />
                     ) : null}
                   </div>
-                ))}
+                );
+              })}
             </div>
           )
         )}

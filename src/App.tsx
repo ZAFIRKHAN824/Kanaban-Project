@@ -19,11 +19,14 @@ function App() {
   const [sortingOptions, setSortingOptions] = useState<
     (DefaultOptionType | BaseOptionType)[]
   >([
-    { value: "A-Z", label: "A-Z" },
-    { value: "Z-A", label: "Z-A" },
-    { value: "Most recent created Task", label: "Most recent created Task" },
-    { value: "Most recent created Task", label: "Most recent created Task" },
+    { value: "A-Z", label: "A to Z" },
+    { value: "Z-A", label: "Z to A" },
+    { value: "Recent", label: "Most Recent Created Task" },
+    { value: "least", label: "Most Oldest Created Task" },
+    { value: "nearest", label: "Most Nearest Due Dates" },
+    { value: "door", label: "door ki dates" },
   ]);
+  const [selectedSortOption, setSelectedSortOption] = useState<string>("");
 
   const [searchedTask, setSearchedTask] = useState("");
   const { tasks, options } = useAppSelector((state: any) => state?.board);
@@ -65,6 +68,10 @@ function App() {
   const handleChange = (value: string[]) => {
     setFilteredTags(value); // Combine the previous state with the new value
   };
+  const handleSortingCange: any = (value: string) => {
+    setSelectedSortOption(value);
+    console.log("selectedOption", selectedSortOption);
+  };
   return (
     <>
       <div id="header">Welcome To Kanban Board</div>
@@ -95,7 +102,7 @@ function App() {
         </div>
         <div id="sorting">
           <Select
-            mode="multiple"
+            allowClear
             style={{
               width: "100%",
               height: 35,
@@ -104,6 +111,7 @@ function App() {
             }}
             placeholder="Sorting"
             options={sortingOptions}
+            onChange={handleSortingCange}
           />
         </div>
         <div id="serachTask">
@@ -124,6 +132,7 @@ function App() {
           setTaskDetailsModalOpen={setTaskDetailsModalOpen}
           searchedTask={searchedTask}
           filteredTags={filteredTags}
+          selectedSortOption={selectedSortOption}
         />
       </div>
       <TaskDetailsModal
