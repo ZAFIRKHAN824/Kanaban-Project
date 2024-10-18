@@ -105,7 +105,7 @@ function App() {
             style={{
               width: "100%",
               height: 35,
-              fontSize: 30,
+              fontSize: 20,
               textAlign: "center",
             }}
             placeholder="Sorting"

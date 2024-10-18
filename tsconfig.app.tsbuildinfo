@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/columncard.tsx","./src/counterslice.ts","./src/createtask.tsx","./src/main.tsx","./src/store.ts","./src/taskcard.tsx","./src/utils.ts","./src/vite-env.d.ts","./src/modals/createtaskmodal.tsx","./src/modals/taskdetailsmodal.tsx"],"version":"5.6.2"}
