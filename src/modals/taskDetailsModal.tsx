@@ -4,7 +4,6 @@ import "../taskCard.css";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { setSelectedTask, Task } from "../counterSlice";
 import { useAppDispatch, useAppSelector } from "../store";
-import { colorList } from "../utils";
 
 const TaskDetailsModal = ({
   isModalOpen,

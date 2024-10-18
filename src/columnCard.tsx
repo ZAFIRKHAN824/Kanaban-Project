@@ -22,7 +22,6 @@ function ColumnCard({
   const dispatch = useAppDispatch();
 
   const [draggedTaskId, setDraggedTaskId] = useState<string | null>(null);
-  const [titleFirstLetter, setTitleFirstLetter] = useState<string[]>([]);
 
   const handleDragStart = (
     event: React.DragEvent<HTMLDivElement>,

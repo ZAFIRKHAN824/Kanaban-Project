@@ -16,9 +16,7 @@ function App() {
   const [createTaskModalOpen, setCreateTaskModalOpen] = useState(false);
   const [taskDetailsModalOpen, setTaskDetailsModalOpen] = useState(false);
   const [filteredTags, setFilteredTags] = useState<string[]>([]);
-  const [sortingOptions, setSortingOptions] = useState<
-    (DefaultOptionType | BaseOptionType)[]
-  >([
+  const [sortingOptions] = useState<(DefaultOptionType | BaseOptionType)[]>([
     { value: "A-Z", label: "A to Z" },
     { value: "Z-A", label: "Z to A" },
     { value: "Recent", label: "Most Recent Created Task" },
@@ -64,6 +62,7 @@ function App() {
     setTaskDetailsModalOpen(false);
     dispatch(deleteTask(task));
     dispatch(setSelectedTask(undefined));
+    alert("Task Deleted !");
   };
   const handleChange = (value: string[]) => {
     setFilteredTags(value); // Combine the previous state with the new value
@@ -106,7 +105,7 @@ function App() {
             style={{
               width: "100%",
               height: 35,
-              fontSize: 20,
+              fontSize: 30,
               textAlign: "center",
             }}
             placeholder="Sorting"
