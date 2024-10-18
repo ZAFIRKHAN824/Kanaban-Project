@@ -103,6 +103,7 @@ function CreateTask({
   };
   const transformDataForForm = (data: any) => {
     if (!data) return;
+    console.log("data: ", data);
     return {
       ...data,
       dueDate: dayjs(data.dueDate, "ddd MMM DD YYYY").isValid()
@@ -114,9 +115,14 @@ function CreateTask({
   useEffect(() => {
     if (selectedTask) {
       form.setFieldsValue(transformDataForForm(selectedTask));
+      console.log(
+        "dayjs(data.dueDate,",
+        dayjs(selectedTask.dueDate, "ddd MMM DD YYYY")
+      );
     } else form.resetFields();
   }, [selectedTask]);
 
+  console.log("DATA:", transformDataForForm(selectedTask) || {});
   return (
     <>
       {
