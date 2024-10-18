@@ -103,12 +103,9 @@ function CreateTask({
   };
   const transformDataForForm = (data: any) => {
     if (!data) return;
-    console.log("data: ", data);
     return {
       ...data,
-      dueDate: dayjs(data.dueDate, "ddd MMM DD YYYY").isValid()
-        ? dayjs(data.dueDate, "ddd MMM DD YYYY")
-        : null, // Handle invalid dates
+      dueDate: dayjs(data.dueDate).isValid() ? dayjs(data.dueDate) : null, // Handle invalid dates
     };
   };
 
@@ -122,7 +119,6 @@ function CreateTask({
     } else form.resetFields();
   }, [selectedTask]);
 
-  console.log("DATA:", transformDataForForm(selectedTask) || {});
   return (
     <>
       {
